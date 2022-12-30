@@ -1,13 +1,37 @@
-import React from 'react';
-import './index.css';
+import { useRef, useState } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+// import './index.css';
+
+const Box = props => {
+  const ref = useRef();
+  const [hovered, hoverHandler] = useState(false);
+  const [clicked, clickHandler] = useState(false);
+  useFrame((state, delta) => (ref.current.rotation.x += delta));
+  return (
+    <mesh
+      {...props}
+      ref={ref}
+      scale={clicked ? 1.5 : 1}
+      onClick={(event) => click(!clicked)}
+      onPointerOver={(event) => hoverHandler(true)}
+      onPointerOut={(event) => hoverHandler(false)}>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+    </mesh>
+  );
+}
 
 const App = props => {
   return (
-    <div className="layout">
-      <div className="content">
-        <h1>initial</h1>
-      </div>
-    </div>
+    <Canvas>
+      <ambientLight intensity={0.5} />
+      <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+      <pointLight position={[-10, -10, -10]} />
+      <Box position={[-1.2, 0, 0]} />
+      <Box position={[1.2, 0, 0]} />
+      <OrbitControls />
+    </Canvas>
   );
 }
 
