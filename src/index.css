@@ -21,20 +21,20 @@ code {
   color: green;
 }
 
-.layout {
+#root {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     color: white;
     overflow: hidden;
     background: black;
 }
 
-.layout > .content {
+#root > .content {
   flex: 1;
   display: flex;
   flex-direction: column;
